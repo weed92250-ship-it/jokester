@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokester · Fun Games & Riddles</title>
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="i0l_vCuYEKuIJZWxyt0gZyBi53uzLBirQf6nlTB53BI" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Play fun games: coin flip, dice roll, and riddles. Support with a coffee donation!">
+    <meta name="keywords" content="games, riddles, fun, coffee, donate, dice, coin flip">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jokestar.netlify.app/">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #fdf6f0 0%, #f0e9e0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 1200px; width: 100%; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 2rem;
+            background: #fff8f2;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        h1 { font-size: 1.8rem; font-weight: 700; color: #4a3a2e; }
+        h1 span { color: #b47c5e; }
+        .lang-switch {
+            display: flex;
+            gap: 6px;
+            background: #ede7df;
+            padding: 4px;
+            border-radius: 40px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #5e4e3e;
+            cursor: pointer;
+        }
+        .lang-btn.active {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            color: #2d1f14;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: #ffffff;
+            padding: 1.5rem 1.2rem 1.8rem;
+            border-radius: 28px;
+            border: 1px solid #f0e8df;
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+        .card-title { font-size: 1.2rem; font-weight: 600; color: #3d3228; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 6px; }
+        .game-area { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; justify-content: center; }
+        .btn {
+            background: #eeded0;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #3d3228;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #ccb9a8;
+            transform: translateY(0);
+            width: 100%;
+            max-width: 180px;
+            transition: 0.1s;
+        }
+        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #ccb9a8; }
+        .btn-primary { background: #b8a084; color: white; box-shadow: 0 4px 0 #7f6b56; }
+        .result-box {
+            background: #fcf7f2;
+            padding: 12px 16px;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #3d3228;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100%;
+            border: 1px dashed #dacfc2;
+            text-align: center;
+        }
+        .dice-grid { display: flex; gap: 16px; font-size: 2.4rem; }
+        .riddle-q { font-size: 1rem; font-weight: 500; padding: 4px 0; text-align: center; min-height: 50px; }
+        .riddle-a { background: #f4eee7; padding: 8px 16px; border-radius: 40px; margin-top: 4px; font-size: 0.95rem; }
+
+        .donate-box {
+            text-align: center;
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #f0e8df;
+        }
+        .donate-btn-custom {
+            display: inline-block;
+            background: #f5c542;
+            color: #2d1f14;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 16px 44px;
+            border-radius: 80px;
+            border: none;
+            box-shadow: 0 6px 0 #be932e;
+            cursor: pointer;
+            transition: 0.1s;
+            text-decoration: none;
+        }
+        .donate-btn-custom:active { transform: translateY(4px); box-shadow: 0 2px 0 #be932e; }
+
+        footer { margin-top: 1.5rem; color: #a89786; font-size: 0.85rem; text-align: center; padding: 1rem 0; }
+
+        @media (max-width: 860px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 580px) {
+            .games-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: stretch; text-align: center; }
+            .lang-switch { justify-content: center; }
+            h1 { font-size: 1.4rem; }
+            .card { min-height: auto; }
+            .dice-grid { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header class="header">
+        <h1>🎭 <span>Jokester</span>.fun</h1>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+            <button class="lang-btn" data-lang="nl" onclick="setLang('nl')">🇳🇱 NL</button>
+        </div>
+    </header>
+
+    <div class="games-grid">
+        <div class="card">
+            <div class="card-title"><span id="coinTitle">🪙 Coin flip</span></div>
+            <div class="game-area">
+                <div class="result-box" id="coinResult">👆 Press</div>
+                <button class="btn" onclick="flipCoin()">🔁 Flip</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span id="diceTitle">🎲 Roll dice</span></div>
+            <div class="game-area">
+                <div class="result-box" id="diceResult">🎲🎲 Go!</div>
+                <div class="dice-grid" id="diceIcons">⚀ ⚀</div>
+                <button class="btn" onclick="rollDice()">🎲 Roll</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span id="riddleTitle">🧩 Riddle</span></div>
+            <div class="game-area">
+                <div class="riddle-q" id="riddleQuestion">Click for riddle</div>
+                <div class="riddle-a" id="riddleAnswer" style="display:none;">🤫</div>
+                <button class="btn" onclick="showRiddle()">❓ New</button>
+                <button class="btn btn-primary" onclick="revealAnswer()">👀 Answer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DONATE BUTTON – PayPal (opens in new tab) -->
+    <div class="donate-box">
+        <a href="https://paypal.me/jokestar869" target="_blank" class="donate-btn-custom" id="donateBtn">☕ Buy me a coffee</a>
+        <div style="margin-top:6px; font-size:0.85rem; color:#8c7b6b;" id="donateSub">Support the fun!</div>
+    </div>
+
+    <footer id="footerText">✨ Made with 🤪 for laughs &amp; coffee</footer>
+</div>
+
+<script>
+    // ============================================================
+    // TRANSLATIONS (EN / NL)
+    // ============================================================
+    const T = {
+        en: {
+            coinTitle: '🪙 Coin flip',
+            coinResultDefault: '👆 Press',
+            diceTitle: '🎲 Roll dice',
+            diceResultDefault: '🎲🎲 Go!',
+            riddleTitle: '🧩 Riddle',
+            riddleDefault: 'Click for riddle',
+            riddleAnswerHidden: '🤫',
+            donateSub: 'Support the fun!',
+            footer: '✨ Made with 🤪 for laughs & coffee',
+            donateBtnText: '☕ Buy me a coffee',
+            diceComments: {
+                2: '🐍 Snake eyes!',
+                3: '🥉 Three, meh.',
+                4: '🌱 Four, growing.',
+                5: '✋ Five, high five!',
+                6: '🎯 Six, nice!',
+                7: '🍀 Lucky seven!',
+                8: '♾️ Eight, infinity?',
+                9: '🎈 Nine, almost!',
+                10: '💯 Ten, perfect!',
+                11: '⚡ Eleven, electric!',
+                12: '🔥 Twelve! Lottery!'
+            },
+            coinResults: ['Heads', 'Tails'],
+            riddles: [
+                { q: 'What has keys but can\'t open locks?', a: 'A piano.' },
+                { q: 'What gets wetter the more it dries?', a: 'A towel.' },
+                { q: 'What has to be broken before you can use it?', a: 'An egg.' },
+                { q: 'I have cities, but no houses. I have mountains, but no trees. What am I?', a: 'A map.' },
+                { q: 'What goes up but never comes down?', a: 'Your age.' },
+                { q: 'What starts with T, ends with T, and has T in it?', a: 'A teapot.' }
+            ]
+        },
+        nl: {
+            coinTitle: '🪙 Kop of munt',
+            coinResultDefault: '👆 Druk',
+            diceTitle: '🎲 Dobbelstenen',
+            diceResultDefault: '🎲🎲 Go!',
+            riddleTitle: '🧩 Raadsel',
+            riddleDefault: 'Klik voor raadsel',
+            riddleAnswerHidden: '🤫',
+            donateSub: 'Steun de pret!',
+            footer: '✨ Gemaakt met 🤪 voor lachen & koffie',
+            donateBtnText: '☕ Trakteer op koffie',
+            diceComments: {
+                2: '🐍 Slangenogen!',
+                3: '🥉 Drie, saai.',
+                4: '🌱 Vier, groeit!',
+                5: '✋ Vijf, high five!',
+                6: '🎯 Zes, mooi!',
+                7: '🍀 Zeven! Geluk!',
+                8: '♾️ Acht, oneindig?',
+                9: '🎈 Negen, bijna!',
+                10: '💯 Tien, perfect!',
+                11: '⚡ Elf, elektrisch!',
+                12: '🔥 Twaalf! Lot kopen!'
+            },
+            coinResults: ['Kop', 'Munt'],
+            riddles: [
+                { q: 'Wat heeft een sleutel maar kan geen slot openen?', a: 'Een piano.' },
+                { q: 'Wat wordt natter naarmate het droogt?', a: 'Een handdoek.' },
+                { q: 'Wat moet je breken voordat je het kunt gebruiken?', a: 'Een ei.' },
+                { q: 'Ik heb steden maar geen huizen, bergen maar geen bomen. Wat ben ik?', a: 'Een kaart.' },
+                { q: 'Wat gaat omhoog maar nooit omlaag?', a: 'Je leeftijd.' },
+                { q: 'Wat begint met een T, eindigt met een T en zit vol T?', a: 'Een theepot.' }
+            ]
+        }
+    };
+
+    let currentLang = 'en';
+
+    function renderLanguage(lang) {
+        const t = T[lang];
+        if (!t) return;
+        document.getElementById('coinTitle').textContent = t.coinTitle;
+        document.getElementById('coinResult').textContent = t.coinResultDefault;
+        document.getElementById('diceTitle').textContent = t.diceTitle;
+        document.getElementById('diceResult').textContent = t.diceResultDefault;
+        document.getElementById('riddleTitle').textContent = t.riddleTitle;
+        document.getElementById('riddleQuestion').textContent = t.riddleDefault;
+        document.getElementById('riddleAnswer').textContent = t.riddleAnswerHidden;
+        document.getElementById('donateSub').textContent = t.donateSub;
+        document.getElementById('footerText').textContent = t.footer;
+        document.getElementById('donateBtn').textContent = t.donateBtnText;
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.lang === lang);
+        });
+        window._langData = t;
+        document.getElementById('riddleAnswer').style.display = 'none';
+    }
+
+    function setLang(lang) {
+        currentLang = lang;
+        renderLanguage(lang);
+    }
+
+    function flipCoin() {
+        const t = window._langData || T.en;
+        const res = Math.random() < 0.5 ? t.coinResults[0] : t.coinResults[1];
+        document.getElementById('coinResult').textContent = `🪙 ${res}`;
+    }
+
+    function rollDice() {
+        const t = window._langData || T.en;
+        const d1 = Math.floor(Math.random() * 6) + 1;
+        const d2 = Math.floor(Math.random() * 6) + 1;
+        const sum = d1 + d2;
+        const icons = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+        document.getElementById('diceIcons').innerHTML = `${icons[d1-1]} ${icons[d2-1]}`;
+        document.getElementById('diceResult').textContent = `🎲 ${sum} — ${t.diceComments[sum] || sum}`;
+    }
+
+    let riddleIndex = 0;
+    function showRiddle() {
+        const t = window._langData || T.en;
+        const r = t.riddles;
+        riddleIndex = Math.floor(Math.random() * r.length);
+        document.getElementById('riddleQuestion').textContent = r[riddleIndex].q;
+        document.getElementById('riddleAnswer').textContent = r[riddleIndex].a;
+        document.getElementById('riddleAnswer').style.display = 'none';
+    }
+    function revealAnswer() {
+        document.getElementById('riddleAnswer').style.display = 'block';
+    }
+
+    const preferred = navigator.language.startsWith('nl') ? 'nl' : 'en';
+    setLang(preferred);
+    setTimeout(showRiddle, 100);
+</script>
+</body>
+</html>
+

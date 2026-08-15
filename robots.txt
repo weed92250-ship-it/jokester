@@ -1,0 +1,4 @@
+txt
+User-agent: *
+Allow: /
+Sitemap: https://jokester.pages.dev/sitemap.xml

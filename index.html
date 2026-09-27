@@ -81,13 +81,5 @@ function randomRiddle(){let r=riddles[Math.random()*riddles.length|0];dq.textCon
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.f)});
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.lang button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.documentElement.lang=b.dataset.lang});
 let today=new Date().toDateString(),yest=new Date(Date.now()-86400000).toDateString();if(s.last!==today){s.streak=s.last===yest?s.streak+1:1;s.last=today;claimStreakReward();checkAchievements(false);save()}else{checkAchievements(false);save()}render();riddlesRender();showDaily();updateMissions();
-</script><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-<script>
-  kofiWidgetOverlay.draw('jokesterfun', {
-    'type': 'floating-chat',
-    'floating-chat.donateButton.text': 'Support Jokester',
-    'floating-chat.donateButton.background-color': '#f45d22',
-    'floating-chat.donateButton.text-color': '#fff'
-  });
-</script>
+</script><a class="coffee" href="https://ko-fi.com/jokesterfun" target="_blank" rel="noopener noreferrer">☕ Support Jokester on Ko-fi</a>
 </body></html>

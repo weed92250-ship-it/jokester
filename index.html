@@ -1,364 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jokester · Fun Games & Riddles</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8109991761364968"
-     crossorigin="anonymous"></script>
-
-    <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="i0l_vCuYEKuIJZWxyt0gZyBi53uzLBirQf6nlTB53BI" />
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Play fun games: coin flip, dice roll, and riddles. Support with a coffee donation!">
-    <meta name="keywords" content="games, riddles, fun, coffee, donate, dice, coin flip">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://jokester.pages.dev/">
-
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Jokester · Fun Games & Riddles">
-    <meta property="og:description" content="Play coin flip, dice roll, and solve riddles. Support the fun with a coffee!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jokester.pages.dev/">
-
-    <!-- ===== INLINED FAVICON ===== -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AD%3C/text%3E%3C/svg%3E">
-    <link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AD%3C/text%3E%3C/svg%3E">
-
-    <!-- ===== GOOGLE ANALYTICS (GA4) – ID: G-JRTRC5XZNS ===== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRTRC5XZNS"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-JRTRC5XZNS');
-    </script>
-
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: linear-gradient(145deg, #fdf6f0 0%, #f0e9e0 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
-        }
-        .container { max-width: 1200px; width: 100%; }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 2rem;
-            background: #fff8f2;
-            padding: 1rem 1.8rem;
-            border-radius: 60px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-        }
-        h1 { font-size: 1.8rem; font-weight: 700; color: #4a3a2e; letter-spacing: -0.5px; }
-        h1 span { color: #b47c5e; }
-        .lang-switch {
-            display: flex;
-            gap: 6px;
-            background: #ede7df;
-            padding: 4px;
-            border-radius: 40px;
-        }
-        .lang-btn {
-            background: transparent;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #5e4e3e;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .lang-btn.active {
-            background: #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            color: #2d1f14;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .card {
-            background: #ffffff;
-            padding: 1.5rem 1.2rem 1.8rem;
-            border-radius: 28px;
-            border: 1px solid #f0e8df;
-            display: flex;
-            flex-direction: column;
-            min-height: 280px;
-        }
-        .card-title { font-size: 1.2rem; font-weight: 600; color: #3d3228; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 6px; }
-        .game-area { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; justify-content: center; }
-        .btn {
-            background: #eeded0;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #3d3228;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #ccb9a8;
-            transform: translateY(0);
-            width: 100%;
-            max-width: 180px;
-            transition: 0.1s;
-        }
-        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #ccb9a8; }
-        .btn-primary { background: #b8a084; color: white; box-shadow: 0 4px 0 #7f6b56; }
-        .result-box {
-            background: #fcf7f2;
-            padding: 12px 16px;
-            border-radius: 60px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #3d3228;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            width: 100%;
-            border: 1px dashed #dacfc2;
-            text-align: center;
-        }
-        .dice-grid { display: flex; gap: 16px; font-size: 2.4rem; }
-        .riddle-q { font-size: 1rem; font-weight: 500; padding: 4px 0; text-align: center; min-height: 50px; }
-        .riddle-a { background: #f4eee7; padding: 8px 16px; border-radius: 40px; margin-top: 4px; font-size: 0.95rem; }
-
-        .donate-box {
-            text-align: center;
-            padding: 1.8rem;
-            margin-bottom: 1.8rem;
-            background: #ffffff;
-            border-radius: 28px;
-            border: 1px solid #f0e8df;
-        }
-        .donate-btn-custom {
-            display: inline-block;
-            background: #f5c542;
-            color: #2d1f14;
-            font-weight: 700;
-            font-size: 1.3rem;
-            padding: 16px 44px;
-            border-radius: 80px;
-            border: none;
-            box-shadow: 0 6px 0 #be932e;
-            cursor: pointer;
-            transition: 0.1s;
-            text-decoration: none;
-        }
-        .donate-btn-custom:active { transform: translateY(4px); box-shadow: 0 2px 0 #be932e; }
-
-        footer { margin-top: 1.5rem; color: #a89786; font-size: 0.85rem; text-align: center; padding: 1rem 0; }
-
-        @media (max-width: 860px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 580px) {
-            .games-grid { grid-template-columns: 1fr; }
-            .header { flex-direction: column; align-items: stretch; text-align: center; }
-            .lang-switch { justify-content: center; }
-            h1 { font-size: 1.4rem; }
-            .card { min-height: auto; }
-            .dice-grid { font-size: 2rem; }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-
-    <header class="header">
-        <h1>🎭 <span>Jokester</span>.fun</h1>
-        <div class="lang-switch">
-            <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
-            <button class="lang-btn" data-lang="nl" onclick="setLang('nl')">🇳🇱 NL</button>
-        </div>
-    </header>
-
-    <div class="games-grid">
-        <div class="card">
-            <div class="card-title"><span id="coinTitle">🪙 Coin flip</span></div>
-            <div class="game-area">
-                <div class="result-box" id="coinResult">👆 Press</div>
-                <button class="btn" onclick="flipCoin()">🔁 Flip</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-title"><span id="diceTitle">🎲 Roll dice</span></div>
-            <div class="game-area">
-                <div class="result-box" id="diceResult">🎲🎲 Go!</div>
-                <div class="dice-grid" id="diceIcons">⚀ ⚀</div>
-                <button class="btn" onclick="rollDice()">🎲 Roll</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-title"><span id="riddleTitle">🧩 Riddle</span></div>
-            <div class="game-area">
-                <div class="riddle-q" id="riddleQuestion">Click for riddle</div>
-                <div class="riddle-a" id="riddleAnswer" style="display:none;">🤫</div>
-                <button class="btn" onclick="showRiddle()">❓ New</button>
-                <button class="btn btn-primary" onclick="revealAnswer()">👀 Answer</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- DONATE – PayPal (opens in new tab) -->
-    <div class="donate-box">
-        <a href="https://paypal.me/jokestar869" target="_blank" class="donate-btn-custom" id="donateBtn">☕ Buy me a coffee</a>
-        <div style="margin-top:6px; font-size:0.85rem; color:#8c7b6b;" id="donateSub">Support the fun!</div>
-    </div>
-
-    <footer id="footerText">✨ Made with 🤪 for laughs &amp; coffee</footer>
-</div>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jokester · Free Games, Riddles & Quizzes</title>
+<meta name="description" content="Jokester is a free collection of quick games, funny riddles, quizzes and daily challenges. Play instantly.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://jokester.pages.dev/">
+<meta property="og:title" content="Jokester · Free Games, Riddles & Quizzes"><meta property="og:description" content="Quick games, riddles, quizzes and daily challenges."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AD%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8109991761364968" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRTRC5XZNS"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-JRTRC5XZNS');</script>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f7f3ef;color:#2d241e}.wrap{width:min(1180px,calc(100% - 24px));margin:auto}header{position:sticky;top:10px;z-index:5;margin:10px 0 20px;padding:12px 16px;border:1px solid #eadfd4;background:#fffaf6ee;backdrop-filter:blur(12px);border-radius:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 10px 35px #4a32120d}.brand{font-weight:900;font-size:1.3rem;color:#38291f;text-decoration:none}.brand span{color:#a96f4e}.nav{display:flex;gap:5px}.nav a{color:#604d3d;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:.86rem;font-weight:800}.nav a:hover{background:#f0e6dc}.lang{display:flex;gap:3px;background:#eee6df;padding:3px;border-radius:12px}.lang button{border:0;background:transparent;padding:6px 8px;border-radius:9px;font-weight:800;cursor:pointer;color:#665344}.lang .active{background:#fff;box-shadow:0 2px 8px #0001}.hero{text-align:center;padding:35px 0 18px}.eyebrow{display:inline-block;background:#ead9cb;color:#72503b;padding:7px 12px;border-radius:99px;font-size:.75rem;font-weight:900}.hero h1{font-size:clamp(2.5rem,7vw,4.6rem);line-height:.96;margin:15px auto 12px;max-width:850px;letter-spacing:-.06em}.hero p{max-width:650px;margin:0 auto 22px;color:#756457;font-size:1.05rem}.actions,.choices{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:13px;padding:11px 17px;background:#ead9cb;color:#3b2d24;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #c9ad99}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #c9ad99}.primary{background:#a96f4e;color:#fff;box-shadow:0 4px 0 #754a32}.small{padding:8px 11px;font-size:.82rem}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 30px}.stat{background:#fff;border:1px solid #eadfd4;border-radius:17px;padding:13px;text-align:center}.stat b{display:block;font-size:1.3rem}.stat span{font-size:.73rem;color:#8a7768}.section{margin:34px 0}.head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:13px}.head h2{margin:0;font-size:1.65rem}.head p{margin:4px 0 0;color:#8a7768;font-size:.88rem}.filters{display:flex;gap:7px;overflow:auto;padding-bottom:5px;margin-bottom:13px}.chip{white-space:nowrap;border:1px solid #e4d8cd;background:#fff;padding:8px 12px;border-radius:99px;cursor:pointer;font-weight:800;color:#695747}.chip.active{background:#3b2d24;color:#fff;border-color:#3b2d24}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{background:#fff;border:1px solid #eadfd4;border-radius:21px;padding:17px;min-height:225px;display:flex;flex-direction:column;box-shadow:0 8px 30px #4a321208}.top{display:flex;justify-content:space-between}.icon{font-size:1.8rem}.tag{font-size:.68rem;background:#f2e9e1;color:#795b48;padding:5px 7px;border-radius:99px;font-weight:900}.card h3{margin:10px 0 4px}.card p{color:#806f62;font-size:.87rem;margin:0}.play{margin-top:auto;padding-top:14px}.panel{display:none;background:#fff;border:1px solid #eadfd4;border-radius:23px;padding:20px;margin-top:14px}.panel.open{display:block}.panelhead{display:flex;justify-content:space-between}.close{border:0;background:#f0e7df;border-radius:9px;padding:7px 9px;cursor:pointer}.body{text-align:center;padding:20px 0}.big{font-size:clamp(2.5rem,8vw,5rem);font-weight:950;min-height:85px;display:grid;place-items:center}.result{background:#f8f2ed;border:1px dashed #d8c8ba;border-radius:14px;padding:12px;margin:10px auto;max-width:560px;font-weight:800}.input{border:1px solid #d9cbbf;border-radius:11px;padding:11px;width:min(270px,100%);font:inherit}.feature{background:#30251f;color:#fff;border-radius:25px;padding:23px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}.feature h2{font-size:2rem;margin:0 0 7px}.feature p{color:#d9cbc0;margin:0 0 15px}.daily{background:#fffaf6;color:#3a2b21;border-radius:18px;padding:17px;text-align:center}.daily .q{font-weight:900;min-height:54px}.answer{display:none;margin:10px 0;padding:9px;background:#f1e7de;border-radius:10px;font-weight:800}.riddles{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.riddle{background:#fff;border:1px solid #eadfd4;border-radius:17px;padding:15px}.riddle q{font-weight:800;display:block}.riddle .ans{display:none;margin-top:9px;color:#765a47;background:#f5eee8;padding:9px;border-radius:9px;font-weight:800}.donate{margin:34px 0;background:#fff;border:1px solid #eadfd4;border-radius:23px;padding:24px;text-align:center}.donate p{color:#806f62}.coffee{display:inline-block;background:#f5c542;color:#2d241e;text-decoration:none;font-weight:950;padding:13px 21px;border-radius:14px;box-shadow:0 4px 0 #b58b27}footer{text-align:center;color:#9a887a;font-size:.8rem;padding:20px 0 38px}@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.feature{grid-template-columns:1fr}.nav{display:none}}@media(max-width:600px){.grid,.riddles{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:2.7rem}}
+</style></head>
+<body><div class="wrap">
+<header><a class="brand" href="#top">🎭 <span>Jokester</span>.fun</a><nav class="nav"><a href="#games">Games</a><a href="#daily">Daily</a><a href="#riddles">Riddles</a></nav><div class="lang"><button class="active" data-lang="en">EN</button><button data-lang="nl">NL</button></div></header>
+<main id="top">
+<section class="hero"><span class="eyebrow">FREE • QUICK • FUN</span><h1>Play something fun in 30 seconds.</h1><p>Quick games, funny riddles, daily challenges and tiny tests for your next break.</p><div class="actions"><a class="btn primary" href="#games">🎮 Play games</a><a class="btn" href="#daily">🔥 Daily challenge</a></div></section>
+<section class="stats"><div class="stat"><b id="played">0</b><span>Games played</span></div><div class="stat"><b id="solved">0</b><span>Riddles solved</span></div><div class="stat"><b id="best">0</b><span>Best score</span></div><div class="stat"><b id="streak">0</b><span>Day streak</span></div></section>
+<section class="section" id="games"><div class="head"><div><h2>🎮 Games</h2><p>Pick one. Play instantly. No account.</p></div></div><div class="filters"><button class="chip active" data-f="all">All</button><button class="chip" data-f="luck">Luck</button><button class="chip" data-f="quiz">Quiz</button><button class="chip" data-f="party">Party</button><button class="chip" data-f="test">Tests</button></div><div class="grid" id="gamesGrid"></div><div class="panel" id="panel"><div class="panelhead"><h3 id="ptitle"></h3><button class="close" onclick="closeGame()">✕</button></div><div class="body" id="pbody"></div></div></section>
+<section class="section" id="daily"><div class="feature"><div><h2>🔥 Daily Challenge</h2><p>One fresh riddle every day. Come back tomorrow and keep your streak.</p><button class="btn primary" onclick="dailyChallenge()">Start today</button></div><div class="daily"><div class="q" id="dq">Ready?</div><div class="answer" id="da"></div><button class="btn small" onclick="revealDaily()">Reveal answer</button></div></div></section>
+<section class="section" id="riddles"><div class="head"><div><h2>🧩 Riddles</h2><p>Easy, funny, logic and tricky riddles.</p></div><button class="btn small" onclick="randomRiddle()">🎲 Random</button></div><div class="riddles" id="riddleGrid"></div></section>
+<section class="donate"><h2>☕ Had fun?</h2><p>Jokester is free. Your support helps pay for hosting and new games.</p><a class="coffee" href="https://paypal.me/jokestar869" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a></section>
+</main><footer>Made with 🤪 for laughs & coffee · Jokester.fun</footer></div>
 <script>
-    // ============================================================
-    // TRANSLATIONS (EN / NL)
-    // ============================================================
-    const T = {
-        en: {
-            coinTitle: '🪙 Coin flip',
-            coinResultDefault: '👆 Press',
-            diceTitle: '🎲 Roll dice',
-            diceResultDefault: '🎲🎲 Go!',
-            riddleTitle: '🧩 Riddle',
-            riddleDefault: 'Click for riddle',
-            riddleAnswerHidden: '🤫',
-            donateSub: 'Support the fun!',
-            footer: '✨ Made with 🤪 for laughs & coffee',
-            donateBtnText: '☕ Buy me a coffee',
-            diceComments: {
-                2: '🐍 Snake eyes!',
-                3: '🥉 Three, meh.',
-                4: '🌱 Four, growing.',
-                5: '✋ Five, high five!',
-                6: '🎯 Six, nice!',
-                7: '🍀 Lucky seven!',
-                8: '♾️ Eight, infinity?',
-                9: '🎈 Nine, almost!',
-                10: '💯 Ten, perfect!',
-                11: '⚡ Eleven, electric!',
-                12: '🔥 Twelve! Lottery!'
-            },
-            coinResults: ['Heads', 'Tails'],
-            riddles: [
-                { q: 'What has keys but can\'t open locks?', a: 'A piano.' },
-                { q: 'What gets wetter the more it dries?', a: 'A towel.' },
-                { q: 'What has to be broken before you can use it?', a: 'An egg.' },
-                { q: 'I have cities, but no houses. I have mountains, but no trees. What am I?', a: 'A map.' },
-                { q: 'What goes up but never comes down?', a: 'Your age.' },
-                { q: 'What starts with T, ends with T, and has T in it?', a: 'A teapot.' }
-            ]
-        },
-        nl: {
-            coinTitle: '🪙 Kop of munt',
-            coinResultDefault: '👆 Druk',
-            diceTitle: '🎲 Dobbelstenen',
-            diceResultDefault: '🎲🎲 Go!',
-            riddleTitle: '🧩 Raadsel',
-            riddleDefault: 'Klik voor raadsel',
-            riddleAnswerHidden: '🤫',
-            donateSub: 'Steun de pret!',
-            footer: '✨ Gemaakt met 🤪 voor lachen & koffie',
-            donateBtnText: '☕ Trakteer op koffie',
-            diceComments: {
-                2: '🐍 Slangenogen!',
-                3: '🥉 Drie, saai.',
-                4: '🌱 Vier, groeit!',
-                5: '✋ Vijf, high five!',
-                6: '🎯 Zes, mooi!',
-                7: '🍀 Zeven! Geluk!',
-                8: '♾️ Acht, oneindig?',
-                9: '🎈 Negen, bijna!',
-                10: '💯 Tien, perfect!',
-                11: '⚡ Elf, elektrisch!',
-                12: '🔥 Twaalf! Lot kopen!'
-            },
-            coinResults: ['Kop', 'Munt'],
-            riddles: [
-                { q: 'Wat heeft een sleutel maar kan geen slot openen?', a: 'Een piano.' },
-                { q: 'Wat wordt natter naarmate het droogt?', a: 'Een handdoek.' },
-                { q: 'Wat moet je breken voordat je het kunt gebruiken?', a: 'Een ei.' },
-                { q: 'Ik heb steden maar geen huizen, bergen maar geen bomen. Wat ben ik?', a: 'Een kaart.' },
-                { q: 'Wat gaat omhoog maar nooit omlaag?', a: 'Je leeftijd.' },
-                { q: 'Wat begint met een T, eindigt met een T en zit vol T?', a: 'Een theepot.' }
-            ]
-        }
-    };
-
-    let currentLang = 'en';
-
-    function renderLanguage(lang) {
-        const t = T[lang];
-        if (!t) return;
-        document.getElementById('coinTitle').textContent = t.coinTitle;
-        document.getElementById('coinResult').textContent = t.coinResultDefault;
-        document.getElementById('diceTitle').textContent = t.diceTitle;
-        document.getElementById('diceResult').textContent = t.diceResultDefault;
-        document.getElementById('riddleTitle').textContent = t.riddleTitle;
-        document.getElementById('riddleQuestion').textContent = t.riddleDefault;
-        document.getElementById('riddleAnswer').textContent = t.riddleAnswerHidden;
-        document.getElementById('donateSub').textContent = t.donateSub;
-        document.getElementById('footerText').textContent = t.footer;
-        document.getElementById('donateBtn').textContent = t.donateBtnText;
-        document.querySelectorAll('.lang-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.lang === lang);
-        });
-        window._langData = t;
-        document.getElementById('riddleAnswer').style.display = 'none';
-    }
-
-    function setLang(lang) {
-        currentLang = lang;
-        renderLanguage(lang);
-    }
-
-    function flipCoin() {
-        const t = window._langData || T.en;
-        const res = Math.random() < 0.5 ? t.coinResults[0] : t.coinResults[1];
-        document.getElementById('coinResult').textContent = `🪙 ${res}`;
-    }
-
-    function rollDice() {
-        const t = window._langData || T.en;
-        const d1 = Math.floor(Math.random() * 6) + 1;
-        const d2 = Math.floor(Math.random() * 6) + 1;
-        const sum = d1 + d2;
-        const icons = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-        document.getElementById('diceIcons').innerHTML = `${icons[d1-1]} ${icons[d2-1]}`;
-        document.getElementById('diceResult').textContent = `🎲 ${sum} — ${t.diceComments[sum] || sum}`;
-    }
-
-    let riddleIndex = 0;
-    function showRiddle() {
-        const t = window._langData || T.en;
-        const r = t.riddles;
-        riddleIndex = Math.floor(Math.random() * r.length);
-        document.getElementById('riddleQuestion').textContent = r[riddleIndex].q;
-        document.getElementById('riddleAnswer').textContent = r[riddleIndex].a;
-        document.getElementById('riddleAnswer').style.display = 'none';
-    }
-    function revealAnswer() {
-        document.getElementById('riddleAnswer').style.display = 'block';
-    }
-
-    const preferred = navigator.language.startsWith('nl') ? 'nl' : 'en';
-    setLang(preferred);
-    setTimeout(showRiddle, 100);
-</script>
-</body>
-</html>
+const games=[
+['coin','🪙','Coin Flip','Heads or tails. Let luck decide.','luck'],
+['dice','🎲','Dice Roll','Roll two dice and chase the lucky seven.','luck'],
+['rps','✊','Rock Paper Scissors','Beat the computer in a quick match.','party'],
+['number','🔢','Guess the Number','Find the hidden number from 1 to 100.','test'],
+['higher','📈','Higher or Lower','Guess if the next number goes up or down.','test'],
+['joke','😂','Random Joke','Get a fresh joke when you need one.','party'],
+['picker','🎯','Random Picker','Let Jokester choose one option for you.','party'],
+['emoji','🧠','Emoji Quiz','Guess the word or phrase from emojis.','quiz'],
+['reaction','⚡','Reaction Test','Wait for green, then click as fast as you can.','test'],
+['spinner','🎡','Yes or No','Ask a question and let luck answer.','luck']
+];
+const riddles=[['What has keys but cannot open locks?','A piano.'],['What gets wetter the more it dries?','A towel.'],['What has to be broken before you can use it?','An egg.'],['I have cities, but no houses. I have mountains, but no trees. What am I?','A map.'],['What goes up but never comes down?','Your age.'],['What has one eye but cannot see?','A needle.'],['What can travel around the world while staying in one corner?','A stamp.'],['What has hands but cannot clap?','A clock.'],['What has a neck but no head?','A bottle.'],['What is full of holes but still holds water?','A sponge.'],['What has many teeth but cannot bite?','A comb.'],['What can you catch but not throw?','A cold.'],['What belongs to you but other people use it more than you?','Your name.'],['What has words but never speaks?','A book.'],['What kind of room has no doors or windows?','A mushroom.'],['What can run but never walks?','Water.'],['What has a bed but never sleeps?','A river.'],['What has a head and a tail but no body?','A coin.'],['What gets bigger the more you take away?','A hole.'],['What can be cracked, made, told and played?','A joke.'],['What has four wheels and flies?','A garbage truck.'],['What has a ring but no finger?','A telephone.'],['What has a bark but no bite?','A tree.'],['What has a tongue but cannot talk?','A shoe.'],['What can fill a room but takes up no space?','Light.'],['What has 13 hearts but no organs?','A deck of cards.'],['What can you hold without ever touching it?','A conversation.'],['What is black when clean and white when dirty?','A blackboard.'],['What has a spine but no bones?','A book.'],['What has a crown but is not a king?','A tooth.'],['What is so fragile that saying its name breaks it?','Silence.'],['What is always coming but never arrives?','Tomorrow.'],['What has no beginning, end, or middle?','A circle.'],['What begins with E but contains only one letter?','An envelope.'],['What has branches but no fruit, trunk or leaves?','A bank.'],['What gets sharper the more you use it?','Your mind.'],['What can you hear but not touch or see?','A sound.'],['What has a lot of eyes but cannot see?','A potato.'],['What has a heart that never beats?','An artichoke.'],['What starts with T, ends with T and has T in it?','A teapot.']];
+const jokes=['Why did the scarecrow win an award? Because he was outstanding in his field.','Why do programmers prefer dark mode? Because light attracts bugs.','What do you call fake spaghetti? An impasta.','Why did the bicycle fall over? Because it was two tired.','What do you call cheese that is not yours? Nacho cheese.','Why was the math book sad? It had too many problems.','What do you call a sleeping bull? A bulldozer.','Why did the cookie go to the doctor? It felt crumby.'];
+const emoji=[['🌧️🐱🐶','Raining cats and dogs'],['🔥🧊','Fire and ice'],['🐝🍯','Honey bee'],['🌙🚶','Moonwalk'],['👑🦁','The Lion King'],['🕷️👨','Spider-Man'],['🚀🌕','Moon mission'],['🍎👁️','Apple of my eye']];
+let s=JSON.parse(localStorage.getItem('jk')||'{}');s.played=s.played||0;s.solved=s.solved||0;s.best=s.best||0;s.streak=s.streak||0;s.last=s.last||'';
+function save(){localStorage.setItem('jk',JSON.stringify(s));played.textContent=s.played;solved.textContent=s.solved;best.textContent=s.best;streak.textContent=s.streak}
+function count(){s.played++;save()}
+function render(filter='all'){gamesGrid.innerHTML=games.filter(g=>filter==='all'||g[4]===filter).map(g=>'<article class="card"><div class="top"><span class="icon">'+g[1]+'</span><span class="tag">'+g[4].toUpperCase()+'</span></div><h3>'+g[2]+'</h3><p>'+g[3]+'</p><div class="play"><button class="btn primary" onclick="openGame(\''+g[0]+'\')">Play →</button></div></article>').join('')}
+function openGame(id){let g=games.find(x=>x[0]===id);panel.classList.add('open');ptitle.textContent=g[1]+' '+g[2];pbody.innerHTML='';({coin,dice,rps,number,higher,joke,picker,emojiGame,reaction,spinner}[id])(pbody);panel.scrollIntoView({behavior:'smooth',block:'center'});count()}
+function closeGame(){panel.classList.remove('open')}
+function coin(b){b.innerHTML='<div class="big" id="co">🪙</div><button class="btn primary" onclick="co.textContent=Math.random()<.5?\'🪙 Heads\':\'🪙 Tails\'">Flip coin</button>'}
+function dice(b){b.innerHTML='<div class="big" id="di">🎲 🎲</div><button class="btn primary" onclick="roll()">Roll two dice</button>'}
+function roll(){let a=1+Math.random()*6|0,c=1+Math.random()*6|0,ic=['⚀','⚁','⚂','⚃','⚄','⚅'];di.textContent=ic[a-1]+' '+ic[c-1]+' = '+(a+c);s.best=Math.max(s.best,a+c);save()}
+function rps(b){b.innerHTML='<p>Pick your move.</p><div class="choices">'+['✊ Rock','✋ Paper','✌️ Scissors'].map((x,i)=>'<button class="btn" onclick="rpsPlay('+i+')">'+x+'</button>').join('')+'</div><div class="result" id="ro">Waiting...</div>'}
+function rpsPlay(p){let c=Math.random()*3|0,n=['Rock','Paper','Scissors'],r=p===c?'Draw':((p-c+3)%3===1?'You win!':'Computer wins!');ro.textContent=n[p]+' vs '+n[c]+': '+r}
+function number(b){window.secret=Math.random()*100+1|0;window.tries=0;b.innerHTML='<p>Guess a number from 1 to 100.</p><input class="input" id="gi" type="number" placeholder="Your guess"><br><button class="btn primary" style="margin-top:9px" onclick="guess()">Guess</button><div class="result" id="go">Good luck!</div>'}
+function guess(){let n=+gi.value;tries++;if(n===secret){go.textContent='🎉 Correct in '+tries+' tries!';s.best=Math.max(s.best,101-tries);save()}else go.textContent=n<secret?'⬆️ Higher':'⬇️ Lower'}
+function higher(b){window.h=Math.random()*100+1|0;window.hs=0;b.innerHTML='<div class="big" id="ho">'+h+'</div><p>Will the next number be higher or lower?</p><div class="choices"><button class="btn" onclick="nextH(1)">⬆️ Higher</button><button class="btn" onclick="nextH(0)">⬇️ Lower</button></div><div class="result" id="hm">Streak: 0</div>'}
+function nextH(up){let n=Math.random()*100+1|0,ok=up?n>h:n<h;h=n;if(ok){hs++;hm.textContent='🔥 Correct! Streak '+hs}else{hs=0;hm.textContent='❌ It was '+n+'. Streak reset.'}ho.textContent=n}
+function joke(b){b.innerHTML='<div class="big">😂</div><div class="result" id="jo">'+jokes[Math.random()*jokes.length|0]+'</div><button class="btn primary" onclick="jo.textContent=jokes[Math.random()*jokes.length|0]">Another joke</button>'}
+function picker(b){b.innerHTML='<p>Enter choices separated by commas.</p><input class="input" id="pi" placeholder="Pizza, burgers, sushi"><br><button class="btn primary" style="margin-top:9px" onclick="pick()">Pick for me</button><div class="big" id="po">🎯</div>'}
+function pick(){let a=pi.value.split(',').map(x=>x.trim()).filter(Boolean);po.textContent=a.length?a[Math.random()*a.length|0]:'Add some choices!'}
+function emojiGame(b){window.eq=emoji[Math.random()*emoji.length|0];b.innerHTML='<div class="big">'+eq[0]+'</div><input class="input" id="ei" placeholder="Your answer"><br><button class="btn primary" style="margin-top:9px" onclick="checkE()">Check</button><div class="result" id="eo">What is it?</div>'}
+function checkE(){eo.textContent=ei.value.trim().toLowerCase()===eq[1].toLowerCase()?'🎉 Correct!':'❌ Answer: '+eq[1]}
+function reaction(b){b.innerHTML='<div class="big" id="rx">🟡</div><button class="btn primary" onclick="startRx()">Start</button>';window.ready=false}
+function startRx(){rx.textContent='🟡 Wait...';ready=false;clearTimeout(window.rt);window.rt=setTimeout(()=>{rx.textContent='🟢 CLICK!';ready=true;window.rs=performance.now()},900+Math.random()*2600)}
+document.addEventListener('click',e=>{if(e.target&&e.target.id==='rx'&&ready){rx.textContent=Math.round(performance.now()-rs)+' ms ⚡';ready=false}})
+function spinner(b){b.innerHTML='<div class="big" id="sp">🎡</div><button class="btn primary" onclick="sp.textContent=[\'YES 👍\',\'NO 👎\',\'MAYBE 🤔\',\'ASK AGAIN 🔄\'][Math.random()*4|0]">Spin</button>'}
+function riddlesRender(){riddleGrid.innerHTML=riddles.slice(0,16).map((r,i)=>'<article class="riddle"><q>'+r[0]+'</q><button class="btn small" onclick="ans('+i+',this)">Show answer</button><div class="ans" id="a'+i+'">'+r[1]+'</div></article>').join('')}
+function ans(i,b){let e=document.getElementById('a'+i),show=e.style.display!=='block';e.style.display=show?'block':'none';b.textContent=show?'Hide answer':'Show answer';if(show){s.solved++;save()}}
+function dailyIndex(){let x=new Date(),v=x.getFullYear()*10000+(x.getMonth()+1)*100+x.getDate(),n=0;while(v){n=(n*31+v%10)%riddles.length;v=Math.floor(v/10)}return n}
+function dailyChallenge(){let r=riddles[dailyIndex()];dq.textContent=r[0];da.textContent=r[1];da.style.display='none';count();document.getElementById('daily').scrollIntoView({behavior:'smooth'})}
+function revealDaily(){da.style.display=da.style.display==='block'?'none':'block';s.solved++;save()}
+function randomRiddle(){let r=riddles[Math.random()*riddles.length|0];dq.textContent=r[0];da.textContent=r[1];da.style.display='none';document.getElementById('daily').scrollIntoView({behavior:'smooth'})}
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.f)});
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.lang button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.documentElement.lang=b.dataset.lang});
+let today=new Date().toDateString(),yest=new Date(Date.now()-86400000).toDateString();if(s.last!==today){s.streak=s.last===yest?s.streak+1:1;s.last=today;save()}else save();render();riddlesRender();dailyChallenge();
+</script></body></html>

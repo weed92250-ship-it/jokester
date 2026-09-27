@@ -65,10 +65,11 @@ function spinner(b){b.innerHTML='<div class="big" id="sp">🎡</div><button clas
 function riddlesRender(){riddleGrid.innerHTML=riddles.slice(0,16).map((r,i)=>'<article class="riddle"><q>'+r[0]+'</q><button class="btn small" onclick="ans('+i+',this)">Show answer</button><div class="ans" id="a'+i+'">'+r[1]+'</div></article>').join('')}
 function ans(i,b){let e=document.getElementById('a'+i),show=e.style.display!=='block';e.style.display=show?'block':'none';b.textContent=show?'Hide answer':'Show answer';if(show){s.solved++;save()}}
 function dailyIndex(){let x=new Date(),v=x.getFullYear()*10000+(x.getMonth()+1)*100+x.getDate(),n=0;while(v){n=(n*31+v%10)%riddles.length;v=Math.floor(v/10)}return n}
-function dailyChallenge(){let r=riddles[dailyIndex()];dq.textContent=r[0];da.textContent=r[1];da.style.display='none';count();document.getElementById('daily').scrollIntoView({behavior:'smooth'})}
+function showDaily(){let r=riddles[dailyIndex()];dq.textContent=r[0];da.textContent=r[1];da.style.display='none'}
+function dailyChallenge(){showDaily();count();document.getElementById('daily').scrollIntoView({behavior:'smooth'})}
 function revealDaily(){da.style.display=da.style.display==='block'?'none':'block';s.solved++;save()}
 function randomRiddle(){let r=riddles[Math.random()*riddles.length|0];dq.textContent=r[0];da.textContent=r[1];da.style.display='none';document.getElementById('daily').scrollIntoView({behavior:'smooth'})}
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.f)});
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.lang button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.documentElement.lang=b.dataset.lang});
-let today=new Date().toDateString(),yest=new Date(Date.now()-86400000).toDateString();if(s.last!==today){s.streak=s.last===yest?s.streak+1:1;s.last=today;save()}else save();render();riddlesRender();dailyChallenge();
+let today=new Date().toDateString(),yest=new Date(Date.now()-86400000).toDateString();if(s.last!==today){s.streak=s.last===yest?s.streak+1:1;s.last=today;save()}else save();render();riddlesRender();showDaily();
 </script></body></html>

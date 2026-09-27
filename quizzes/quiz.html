@@ -6,24 +6,22 @@
 <div class="card"><div id="quiz"><div class="progress"><div class="bar" id="bar"></div></div><div class="muted" id="count"></div><div class="q" id="question"></div><div class="answers" id="answers"></div></div>
 <div id="result" class="result hide"><div>🎉 Quiz complete</div><div class="score" id="score"></div><p id="message"></p><button class="btn" onclick="restart()">Play again</button><button class="btn" onclick="share()">Challenge a friend</button><p class="muted" id="shareStatus"></p></div></div></div>
 <script>
-const qs=[
-['Which planet is known as the Red Planet?',['Mars','Venus','Jupiter','Mercury'],0],
-['How many sides does a hexagon have?',['5','6','7','8'],1],
-['Which animal is known for black and white stripes?',['Tiger','Zebra','Panda','Skunk'],1],
-['What is H2O?',['Salt','Oxygen','Water','Hydrogen'],2],
-['Which ocean is the largest?',['Atlantic','Indian','Pacific','Arctic'],2],
-['How many days are in a leap year?',['364','365','366','367'],2],
-['Which instrument has black and white keys?',['Guitar','Piano','Drum','Flute'],1],
-['What is the capital of France?',['Paris','Rome','Madrid','Lisbon'],0],
-['Which shape has three sides?',['Circle','Square','Triangle','Oval'],2],
-['What do bees make?',['Milk','Honey','Bread','Silk'],1]
-];
+const bank={
+general:[['Which planet is known as the Red Planet?',['Mars','Venus','Jupiter','Mercury'],0],['How many sides does a hexagon have?',['5','6','7','8'],1],['Which animal is known for black and white stripes?',['Tiger','Zebra','Panda','Skunk'],1],['What is H2O?',['Salt','Oxygen','Water','Hydrogen'],2],['Which ocean is the largest?',['Atlantic','Indian','Pacific','Arctic'],2],['How many days are in a leap year?',['364','365','366','367'],2],['Which instrument has black and white keys?',['Guitar','Piano','Drum','Flute'],1],['What is the capital of France?',['Paris','Rome','Madrid','Lisbon'],0],['Which shape has three sides?',['Circle','Square','Triangle','Oval'],2],['What do bees make?',['Milk','Honey','Bread','Silk'],1]],
+science:[['Which gas do plants absorb?',['Oxygen','Carbon dioxide','Helium','Nitrogen'],1],['What force pulls objects toward Earth?',['Friction','Gravity','Magnetism','Pressure'],1],['How many bones does an adult human typically have?',['106','206','306','406'],1],['Which organ pumps blood?',['Lung','Brain','Heart','Liver'],2],['What is the nearest star to Earth?',['Sirius','The Sun','Polaris','Vega'],1],['What is the chemical symbol for gold?',['Ag','Au','Gd','Go'],1],['Which planet has prominent rings?',['Mars','Saturn','Venus','Mercury'],1],['What part of a plant absorbs water?',['Flower','Root','Fruit','Seed'],1],['What is the boiling point of water at sea level in Celsius?',['50','75','100','125'],2],['Which animal is a mammal?',['Shark','Dolphin','Trout','Lizard'],1]],
+geography:[['Which country has the city of Tokyo?',['China','Japan','Thailand','Korea'],1],['Which continent is Egypt in?',['Europe','Asia','Africa','South America'],2],['What is the largest ocean?',['Atlantic','Pacific','Indian','Arctic'],1],['Which country is shaped like a boot?',['Spain','Italy','Greece','Portugal'],1],['What is the capital of Australia?',['Sydney','Melbourne','Canberra','Perth'],2],['Which river is famous for flowing through Egypt?',['Nile','Amazon','Danube','Yangtze'],0],['Which continent is the Sahara Desert in?',['Asia','Africa','Europe','Australia'],1],['Which country has the Great Wall?',['India','China','Japan','Mongolia'],1],['Which ocean lies east of Africa?',['Atlantic','Pacific','Indian','Arctic'],2],['Which city is the capital of the United Kingdom?',['Paris','London','Dublin','Berlin'],1]],
+animals:[['Which animal is known as the king of the jungle?',['Lion','Tiger','Elephant','Bear'],0],['What is a baby dog called?',['Kitten','Puppy','Calf','Foal'],1],['Which animal gives us wool?',['Cow','Sheep','Horse','Goat'],1],['Which bird cannot fly?',['Eagle','Penguin','Sparrow','Falcon'],1],['Which animal has a trunk?',['Giraffe','Elephant','Zebra','Rhino'],1],['What do pandas mainly eat?',['Grass','Bamboo','Fish','Fruit'],1],['Which animal is the fastest on land?',['Lion','Cheetah','Horse','Wolf'],1],['What is a group of lions called?',['Pack','Pride','Herd','Flock'],1],['Which animal is famous for changing color?',['Chameleon','Rabbit','Otter','Moose'],0],['Which animal lays eggs?',['Dog','Cat','Chicken','Cow'],2]],
+food:[['Which fruit is yellow and curved?',['Apple','Banana','Pear','Plum'],1],['Which food is made from cocoa?',['Chocolate','Rice','Bread','Cheese'],0],['What is the main ingredient in guacamole?',['Tomato','Avocado','Potato','Carrot'],1],['Which grain is used to make popcorn?',['Wheat','Corn','Rice','Oats'],1],['Which drink is made from tea leaves?',['Tea','Milk','Lemonade','Cocoa'],0],['Which food is commonly used on pizza?',['Cheese','Jam','Cereal','Yogurt'],0],['Which fruit has seeds on its outside?',['Strawberry','Apple','Orange','Peach'],0],['What is sushi commonly wrapped in?',['Seaweed','Lettuce','Bread','Cheese'],0],['Which vegetable is orange?',['Carrot','Cucumber','Celery','Onion'],0],['What is hummus mainly made from?',['Chickpeas','Apples','Rice','Potatoes'],0]]
+};
+const key=new URLSearchParams(location.search).get('quiz')||'general';
+const qs=bank[key]||bank.general;
+
 let i=0,score=0;
 function render(){let q=qs[i];count.textContent='Question '+(i+1)+' of '+qs.length;question.textContent=q[0];answers.innerHTML=q[1].map((a,n)=>'<button class="ans" onclick="answer('+n+')">'+a+'</button>').join('');bar.style.width=((i)/qs.length*100)+'%'}
 function answer(n){if(n===qs[i][2])score++;i++;if(i<qs.length)render();else finish()}
 function finish(){quiz.classList.add('hide');result.classList.remove('hide');bar.style.width='100%';document.title='Quiz Result '+score+'/'+qs.length+' · Jokester';scoreEl();let m=score>=9?'Excellent score!':score>=7?'Great run!':score>=5?'Nice try!':'Run it again and beat your score!';message.textContent=m;localStorage.setItem('jk_quiz_best',Math.max(score,+(localStorage.getItem('jk_quiz_best')||0)))}
 function scoreEl(){document.getElementById('score').textContent=score+'/'+qs.length}
 function restart(){i=0;score=0;result.classList.add('hide');quiz.classList.remove('hide');render()}
-async function share(){let url=location.origin+'/challenge/?score='+score+'&total='+qs.length+'&quiz=general';let text='I scored '+score+'/'+qs.length+' on Jokester. Can you beat me?';try{if(navigator.share)await navigator.share({title:'Jokester Quiz Challenge',text,url});else{await navigator.clipboard.writeText(url);shareStatus.textContent='Challenge link copied.'}}catch(e){}}
+async function share(){let url=location.origin+'/challenge/?score='+score+'&total='+qs.length+'&quiz='+encodeURIComponent(key);let text='I scored '+score+'/'+qs.length+' on Jokester. Can you beat me?';try{if(navigator.share)await navigator.share({title:'Jokester Quiz Challenge',text,url});else{await navigator.clipboard.writeText(url);shareStatus.textContent='Challenge link copied.'}}catch(e){}}
 render();
 </script></body></html>
